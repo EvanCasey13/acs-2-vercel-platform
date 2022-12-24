@@ -1,8 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import reviewsRouter from './api/reviews';
-import session from 'express-session';
-import passport from './authenticate';
 import './seedData'
 import './db';
 
@@ -21,10 +19,6 @@ const errHandler = (err, req, res, next) => {
 const app = express();
 
 const port = process.env.PORT;
-
-app.use(express.json());
-
-app.use(passport.initialize());
 
 app.use('/api/reviews', reviewsRouter);
 
