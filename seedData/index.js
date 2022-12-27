@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 import reviewModel from '../api/reviews/reviewModel.js';
 import reviews from './reviews.js';
+import movieModel from '../api/movies/movieModel.js';
+import movies from './movies.js';
 
 dotenv.config();
 
@@ -17,6 +19,20 @@ export async function loadReviews() {
   }
 }
 
+// deletes all movies documents in collection and inserts test data
+export async function loadMovies() {
+  console.log('load seed data');
+  console.log(movies.length);
+  try {
+    await movieModel.deleteMany();
+    await movieModel.collection.insertMany(movies);
+    console.info(`${movies.length} Movies were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load movie Data: ${err}`);
+  }
+}
+
 if (process.env.SEED_DB == 'true') {  
   loadReviews();
+  loadMovies();
 }
